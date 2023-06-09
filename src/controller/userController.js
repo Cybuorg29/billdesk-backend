@@ -2,6 +2,7 @@
 const express = require('express')
 const UserModel = require('../model/user/userModel')
 const UserDetailModel = require('../model/user/userDetailModel')
+const offlineClientModel = require('../model/client/clientModel')
 exports.register =async(req,res)=>{
     try{
       console.log('register')
@@ -119,6 +120,54 @@ exports.login = async (req,res)=>{
         console.log(err.message)
         // return res.json(200).json({code:500,message:err.message})
       }
+  }
+
+
+  exports.getUser=async(req,res)=>{
+     try{
+       console.log('getUser')
+       const {token} = req.params
+        if(!token){
+          return res.status(200).json({code:400,message:'an error occured'})
+        }
+       const  user = await UserDetailModel.findOne({_id:token})
+        console.log(user)
+        //     console.log('user',user)
+        // if(user!='null'){
+        //     console.log('!null')
+        //   return res.status(200).json({code:200,user:user})
+        // }
+        // if(offlineUser!='null'){
+        //    console.log('offline')
+
+        //   return res.status(200).json({code:200,user:offlineUser})
+          
+        // }
+
+        // return res.status(200).json({code:400,message:'an error occured'})
+        if(!user){
+           console.log('userNull')
+         const offlineUser = await offlineClientModel.findOne({_id:token});
+          console.log(offlineUser)
+          if(!offlineUser){
+            return res.status(200).json({code:400,message:'user not found'})
+          }else{
+             console.log('offlineClient',offlineUser)
+            return res.status(200).json({code:200,user:offlineUser})
+
+          }
+          
+
+        }
+        console.log('user')
+        return res.status(200).json({code:200,data:user})
+
+
+     }catch(err){
+      console.log(err.message)
+      return res.status(200).json({code:500,message:err.message})
+     }
+
   }
 
 

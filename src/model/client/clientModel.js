@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 
-const userDetailSchema = new mongoose.Schema({
+const offlineClientSchema= new mongoose.Schema({
     name:{type:String,require:true},
     gstin:{type:String,require:true},
     phone:{type:String,require:true},
@@ -10,13 +10,12 @@ const userDetailSchema = new mongoose.Schema({
     district:{type:String,require:true},
     pincode:{type:String,require:true},
     state:{type:String,require:true},
-    Activities:{type:String,require:true},
+    activities:{type:String,require:true},
     adress:{type:String,require:true},
-    id:{type:String,require:true},
-    inNo:{type:String,require:true}
-
+     
 })
 
-const UserDetailModel = mongoose.model('usersDetails', userDetailSchema)
 
-module.exports = UserDetailModel
+const offlineClientModel = mongoose.model('offlineClient',offlineClientSchema)
+
+module.exports = offlineClientModel
