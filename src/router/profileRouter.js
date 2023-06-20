@@ -26,8 +26,8 @@ cloudinary.config({
   //   console.log(obj);
   // })();
   
-  router.post('/profile/setup',upload.single('image'),setupProfile)
-  router.post('/profile/setup/updatephoto',upload.single('image'),uploadSetUpImage)
+  router.post('/profile/setup',upload.single('file'),setupProfile)
+  router.post('/profile/update/photo',upload.single('image'),uploadSetUpImage)
 
 
 module.exports = router

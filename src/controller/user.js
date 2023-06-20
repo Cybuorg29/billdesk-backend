@@ -2,7 +2,7 @@ const UserModel = require("../model/userModel");
 const bcrypt = require('bcrypt')
  const jwt = require('jsonwebtoken')
   const dotenv = require('dotenv');
-const profileModel = require("../model/Profile");
+const profileModel = require("../model/ProfileModel");
 const bankModel = require("../model/BankModel");
   dotenv.config()
  const secret = process.env.SECRET_KEY
