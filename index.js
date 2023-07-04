@@ -4,7 +4,7 @@ const bodyParser = require('body-parser')
 const cors = require('cors')
 const userRouter  = require( './src/router/userRouter')
 const profileRouter = require('./src/router/profileRouter')
-const trackerRouter = require('./src/router/trackerRouter')
+const trackerRouter = require('./src/router/incomeAndExpencesRouter')
 require('dotenv').config()
 require('./database/connection')
 const port = process.env.PORT

@@ -27,3 +27,23 @@ exports.createIncome=async(req,res)=>{
         return res.status(200).json({code:500,message:'an error occured'})
     }
 }
+
+exports.getIncome=async(req,res)=>{
+  try{
+
+    const {token} = req.params;
+    if(!token){
+      return res.status(200).json({code:400,message:'an error occured '})
+    }
+    const id = await UserModel.convertToken(token)
+    if(!id){
+      throw new Error('user not found')
+    }
+    const income = await incomeModel.find({id:id})
+    return res.status(200).json({code:200,message:'opertaion completed sucessfully',income:income})
+  }catch(err){
+    console.log(err.message)
+    return res.status(200).json({code:500,message:err.message})
+  }
+
+}
