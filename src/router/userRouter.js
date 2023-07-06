@@ -6,8 +6,8 @@ const { getUserDataByToken } = require('../controller/profile')
 const router = express.Router()
 
 
-router.post(`/user/signup`,signup)
-router.post(`/user/login`,login)
-router.get(`/user/getdata/:token`,getUserDataByToken)
+router.post(`/user/signup`,signup)   //sign up user 
+router.post(`/user/login`,login)  //search by username name and  compared hashed password and then return token 
+router.get(`/user/getdata/:token`,getUserDataByToken)  // get user data 
 
 module.exports = router
