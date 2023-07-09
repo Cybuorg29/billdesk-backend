@@ -15,8 +15,8 @@ exports.getUserDataByToken=async(req,res)=>{
             return res.status(200).json({code:100,message:'please set up your profile'})
           }
            const bank = await bankModel.findOne({id:id})
-            const expences = await expencesModel.find({id:id})
-             const income = await incomeModel.find({id:id})
+            const expences = (await expencesModel.find({id:id}))
+             const income = (await incomeModel.find({id:id}))
           return res.status(200).json({code:200,message:'data fetched sucessfully',user:user,bank:bank,income:income,expences:expences})
   
     }catch(err){
