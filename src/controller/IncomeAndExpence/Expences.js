@@ -51,3 +51,48 @@ exports.getExpences = async (req, res) => {
         return res.status(200).json({ code: 500, message: 'an error occured' })
     }
 }
+
+
+exports.deleteExpence = async (req, res) => {
+    try {
+
+        const { token, uid } = req.params;
+        if (!token || !uid) {
+            throw new Error({ code: 400, message: 'an error occured please try again' })
+        }
+        const id = await UserModel.convertToken(token);
+        const deleteExpence = await expencesModel.findOneAndDelete({ _id: id, id: uid })
+        return res.status(200).json({ code: 200, message: 'Expence Delete Sucessfully' })
+
+    } catch (err) {
+        return res.status(200).json({ code: err.code, message: err.message })
+
+    }
+
+
+
+}
+
+exports.editExpence = async (req, res) => {
+    try {
+        const { data } = req.body;
+        if (!data) {
+
+            return res.status(200).json({ code: 400, message: 'an error ocuured please try again' })
+        }
+        const { _id, title, category, amount, id, date } = data;
+        if (!_id || !title || !category || !amount || !id || !date) {
+            return res.status(200).json({ code: 400, message: 'an error ocuured please retry' })
+        }
+        console.log(_id, title, category, amount, id, date)
+        const updateExpence = await expencesModel.findOneAndUpdate({ _id: _id, id: id }, { $set: { title: title, amount: amount, category: category } });
+        if (!updateExpence) {
+            return res.status(200).json({ code: 500, message: 'an error occured in editing . please try again' })
+        }
+        return res.status(200).json({ code: 200, message: ' Edited Sucessfully', obj: updateExpence });
+
+
+    } catch (err) {
+        return res.status(200).json({ code: err.code, message: err.messsage })
+    }
+}

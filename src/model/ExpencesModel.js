@@ -5,7 +5,8 @@ const ExpencesSchema = new mongoose.Schema({
     category: { type: String, require: true },
     amount: { type: Number, require: true },
     id: { type: String, require: true },
-    date: { type: String, require: true }
+    date: { type: String, require: true },
+    uid: { type: String }
 })
 
 

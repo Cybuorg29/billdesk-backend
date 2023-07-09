@@ -26,6 +26,7 @@ exports.signup = async (req, res) => {
       return res.status(200).json({ code: 400, message: 'user already registered wirh this email please login or choose a different email' })
     }
     console.log(password)
+    // create a hashed password
     const salt = await bcrypt.genSalt()
     const hashedPassword = await bcrypt.hash(password, salt)
     console.log(hashedPassword)
