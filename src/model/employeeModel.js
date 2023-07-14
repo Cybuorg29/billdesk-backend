@@ -5,9 +5,11 @@ const employeeSchema = mongoose.Schema({
     name: {type:String},
     adress: {type:String},
     salary: {type:Number},
-    balance: number,
+    balance: {type:Number},
     id: {type:String},
-    image: {type:String}
+    image: {type:String},
+    type:{type:Number},
+    phone:{type:String}
 })
 
 const  employeeModel = mongoose.model('employees',employeeSchema)
