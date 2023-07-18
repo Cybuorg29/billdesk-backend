@@ -4,7 +4,8 @@ const { getEmployee } = require('../controller/employee/get');
 const router = express.Router()
 const cloudinary = require('cloudinary').v2
 const { CloudinaryStorage } = require('multer-storage-cloudinary')
-const multer = require('multer')
+const multer = require('multer');
+const { deleteEmployee } = require('../controller/employee/delete');
 
 
 cloudinary.config({
@@ -25,6 +26,8 @@ const storage = new CloudinaryStorage({
 const upload = multer({ storage: storage })
 router.post('/create/employee',upload.single('image'),createEmployee);
 router.get('/get/employee/:token',getEmployee)
+router.get('/delete/employee/:token/:id',deleteEmployee);
+
 
 
 module.exports = router;

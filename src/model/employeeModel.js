@@ -10,6 +10,8 @@ const employeeSchema = mongoose.Schema({
     image: {type:String},
     type:{type:Number},
     phone:{type:String}
+},{
+    timestamps: true,
 })
 
 const  employeeModel = mongoose.model('employees',employeeSchema)
