@@ -1,5 +1,6 @@
 const incomeModel = require("../../model/IncomeModel");
 const UserModel = require("../../model/userModel");
+const { getDate } = require("../../utils/date/createDate");
 
 exports.createIncome = async (req, res) => {
   try {
@@ -12,12 +13,7 @@ exports.createIncome = async (req, res) => {
     if (!id) {
       throw new Error('user not found')
     }
-    const d = new Date()
-    const day = d.getDate()
-    const month = String(d.getMonth() + 1).padStart(2, '0');
-    let year = d.getFullYear()
-    var twoDigitYear = year.toString().substr(-2);
-    const date = `${day}-${month}-${twoDigitYear}`
+      const date = getDate()
     const pushIncome = await incomeModel.create({ title, amount, category, id, date: date })
     if (!pushIncome) throw new Error("an error occured")
     return res.status(200).json({ code: 200, message: 'Income Added Sucessfully', income: pushIncome })

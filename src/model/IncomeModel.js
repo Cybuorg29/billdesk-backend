@@ -7,6 +7,8 @@ const incomeSchema = new mongoose.Schema({
     provisionAmt:[],
     id:{type:String,require:true},
     date:{type:String,require:true}
+},{
+    timestamps:true
 })
 
 const incomeModel = mongoose.model('income',incomeSchema)
