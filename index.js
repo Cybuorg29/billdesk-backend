@@ -6,6 +6,7 @@ const userRouter  = require( './src/router/userRouter')
 const profileRouter = require('./src/router/profileRouter')
 const trackerRouter = require('./src/router/incomeAndExpencesRouter')
 const employeerouter = require('./src/router/employeeRouter')
+const productRouter = require('./src/router/productRouter')
 require('dotenv').config()
 require('./database/connection')
 const port = process.env.PORT
@@ -18,6 +19,7 @@ app.use('/api',userRouter)
 app.use('/api',profileRouter)
 app.use('/api',trackerRouter)
 app.use('/api',employeerouter)
+app.use('/api',productRouter)
 
 app.get('/',(req,res)=>{
       res.json('connected')
