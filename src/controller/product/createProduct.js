@@ -5,13 +5,14 @@ exports.createProduct = async(req,res) => {
 
     try {
 
+       
         const { token, product } = req.body;
         if (!token) {
             return res.status(200).json({ message: 'an error occured please refresh and and try again ', code: 400 })
         }
      
             if(!product?.name,
-               !product?.tax,
+            //    !product?.tax,
                !product?.description,
                !product?.code,
                !product?.rate,
@@ -27,8 +28,12 @@ exports.createProduct = async(req,res) => {
                 description,
                 code,
                 rate,
-                category,limit ,stock } =  product;
-                 const image = req?.file.path;
+                category,limit ,stock,weight } =  product;
+                 let  image = req?.file?.path;
+                   if(!image||image=== undefined){
+                     image = ''
+                   }
+                  
 
                const id = await UserModel.convertToken(token);
 
@@ -47,7 +52,7 @@ exports.createProduct = async(req,res) => {
             category,
             id,
             limit,
-            stock
+            stock,weight
                 })
 
            return res.status(200).json({code:200,message:'product added sucessfully',product:createProduct});
@@ -56,6 +61,7 @@ exports.createProduct = async(req,res) => {
 
 
     } catch (err) {
+        console.log(err.message)
         return res.status(200).json({ message: 'an error occured ', code: 500, error: err.message })
     }
 

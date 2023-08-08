@@ -82,3 +82,23 @@ exports.login = async (req, res) => {
 
 }
 
+ exports.verify=async(req,res)=>{
+  try{
+
+    const {token} = req.params;
+    const id = await UserModel.convertToken(token);
+    const isUser = await UserModel.findOne({_id:id})
+
+    if(!isUser){
+
+      throw new Error({code:400,error:'token not verified'})
+
+    }
+    return res.status(200).json({code:200,package:{}})
+
+  }catch(err){
+    console.log(err.message)
+     return res.status(200).json({code:500,message:'cannot verify your login please try again  ',error:err.message})
+  }
+ }
+

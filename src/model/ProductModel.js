@@ -3,7 +3,10 @@ const mongoose = require('mongoose')
 const ProductSchema  =  new  mongoose.Schema({
  
     name:{type:String,require:true},
-    tax:[],
+    tax:[{
+        type:{type:String},
+         amount:{type:Number}
+    }],
     description:{type:String,require:true},
     code:{type:String,require:true},
     id:{type:String},
@@ -11,7 +14,8 @@ const ProductSchema  =  new  mongoose.Schema({
     rate:{type:Number,require:true},
     category:{type:String},
     limit:{type:Number,require:true},
-    stock:{type:Number,require:true}
+    stock:{type:Number,require:true},
+    weight:{type:Number}
 
 },{
     timestamps:true
