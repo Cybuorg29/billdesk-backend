@@ -12,7 +12,6 @@ exports.createProduct = async(req,res) => {
         }
      
             if(!product?.name,
-            //    !product?.tax,
                !product?.description,
                !product?.code,
                !product?.rate,
@@ -55,7 +54,7 @@ exports.createProduct = async(req,res) => {
             stock,weight
                 })
 
-           return res.status(200).json({code:200,message:'product added sucessfully',product:createProduct});
+           return res.status(200).json({code:200,message:'product added sucessfully',package:createProduct});
 
 
 
