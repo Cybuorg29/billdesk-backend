@@ -2,6 +2,7 @@ const { token } = require("morgan");
 const UserModel = require("../../model/userModel");
 const productModel = require("../../model/ProductModel");
 const expencesModel = require("../../model/ExpencesModel");
+const { sliceFloat } = require("../../utils/ConvertFloatTo2Digit");
 
 exports.updateProductData=async(req,res)=>{
 
@@ -16,11 +17,21 @@ exports.addStock=async(req,res)=>{
           const id = await UserModel.convertToken(token);
            const Product = await productModel.findOne({_id:_id,id:id});
             if(!Product)  return res.status(200).json({code:404,message:'an error occured',error:''});
-            const updateStockAndPrice = await productModel.findOneAndUpdate({_id:_id,id:id},{$set:{rate:price,stock:parseFloat(Product.stock + parseFloat(value))}});
-            const pushExpences = await expencesModel.create({ title:`Goods Purchased`, amount:total, category:200, id, date:date,uid:Product._id })
+               let avgPrice = Product.rate * Product.stock
+                
+               console.log(avgPrice)
+               avgPrice =  avgPrice +(price*value);
+               console.log(avgPrice)
+                const totalStock =  (parseInt(Product.stock)+parseInt(value))
+                console.log(totalStock)
+                   avgPrice = avgPrice/totalStock
+              console.log(avgPrice)
+               avgPrice =    sliceFloat(avgPrice);
+            const updateStockAndPrice = await productModel.findOneAndUpdate({_id:_id,id:id},{$set:{rate:avgPrice,stock:parseFloat(Product.stock + parseFloat(value))}});
+            const pushExpences = await expencesModel.create({ title:`${Product.name} Purchased`, amount:total, category:200, id, date:date,uid:Product._id })
             console.log(pushExpences)
             if (!pushExpences) throw new Error("an error occured")
-            return res.status(200).json({ code: 200, message: 'Stock updates sucessfully', package: pushExpences });
+            return res.status(200).json({ code: 200, message: 'Stock updates sucessfully', package: {pushExpences,avgPrice} });
 
 
 
