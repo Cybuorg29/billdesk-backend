@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const offlineUserModelSchema = mongoose.Schema({
+const offlineUserModelSchema = new mongoose.Schema({
     name:{type:String,require:true},
     gstin:{type:String,require:true},
     phone:{type:String,require:true},
@@ -11,7 +11,8 @@ const offlineUserModelSchema = mongoose.Schema({
     state:{type:String,require:true},
     activities:{type:String,require:true},
     pincode:{type:String,require:true},
-    type:{type:'200'|'100',require:true}  
+    type:{type:Number,require:true} ,
+    role:{type:Number,require:true} 
 })
 
 const OfflineUserModel = mongoose.model('Offline User',offlineUserModelSchema);

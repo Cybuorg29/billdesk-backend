@@ -13,7 +13,9 @@ const profileSchema= new mongoose.Schema({
     image:{type:String},
     id:{type:String,require:true},
     isSetUp:{type:Boolean,require:true},
-    activities:{type:String,require:true}
+    activities:{type:String,require:true},
+    type:{type:Boolean,require:true}
+
 })
 
 const profileModel = mongoose.model('profile',profileSchema)
