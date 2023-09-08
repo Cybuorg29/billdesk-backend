@@ -87,7 +87,7 @@ exports.getUserDataByToken=async(req,res)=>{
         console.log(image)
         
           const id = await UserModel.convertToken(token);
-     const updateProfile = await profileModel.findOneAndUpdate({id:id},{$set:{name:name,gstin:gstin,phone:phone,building:building,city:city,district:district,email:email,image:image,state:state,pincode:pincode,activities:activities,type:true}})
+     const updateProfile = await profileModel.findOneAndUpdate({id:id},{$set:{name:name,gstin:gstin,phone:phone,building:building,city:city,district:district,email:email,image:image,state:state,pincode:pincode,activities:activities}})
      const updateBank = await bankModel.findOneAndUpdate({id:id},{$set:{name:Accountname,no:no,isfc:isfc,bank:bankName,branch:branch}})
       return res.status(200).json({code:200,message:'Setup Complete'})
   }catch(err){
