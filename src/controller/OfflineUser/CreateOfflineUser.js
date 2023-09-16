@@ -30,17 +30,16 @@ exports.addOfflineClient = async (req, res) => {
 
      const createUser = await UserModel.create({name:name,email:email,password:Math.random()*100,phone:phone,username:Math.random()*100});
      createUser.save();
-     const createProfile = await profileModel.create({name,gstin,phone,email,building,city,district,state,activities,pincode,type,isSetUp:false,id:createUser._id,image:''})
+     const createProfile = await profileModel.create({name:name,gstin,phone,email,building,city,district,state,activities,pincode,type,isSetUp:false,id:createUser._id,image:''})
      createProfile.save();
-      const CreateBank = await bankModel.create({bank:bankName,branch:branch,id:createUser._id,isfc:isfc,name:name,no:no});
+      const CreateBank = await bankModel.create({bank:bankName,branch:branch,id:createUser._id,isfc:isfc,name:Accountname,no:no});
       CreateBank.save();
         console.log('save')
        
         let  sid = '';
         let cid = '';
-        let t = 0
          console.log('asdasda')
-       if(type===0){
+       if(type===1){
          sid = _id;
          cid = createUser._id
         

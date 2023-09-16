@@ -5,7 +5,7 @@ const router = express.Router();
 const cloudinary  = require('cloudinary').v2
 const {CloudinaryStorage} = require('multer-storage-cloudinary')
 const multer = require('multer');
-const { getProducts } = require('../controller/product');
+const { getProducts, getPublicProducts } = require('../controller/product');
 const { addStock } = require('../controller/product/updateProduct');
 
 cloudinary.config({
@@ -27,8 +27,9 @@ cloudinary.config({
 
 router.post("/create/product",upload.single('image'),createProduct);
 router.get('/delete/product/:token/:_id',deleteProduct)
-router.get(`/get/products/:token`,getProducts)
+router.get(`/get/user/products/:token`,getProducts)
 router.post(`/add/stock`,addStock);
+router.get('/get/products/:id',getPublicProducts)
 
 
 module.exports = router

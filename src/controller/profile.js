@@ -115,3 +115,32 @@ exports.getUserDataByToken=async(req,res)=>{
       return res.status(200).json({code:500,message:err.message})
     }
   }
+
+  exports.getProfileData=async(req,res)=>{
+    
+    try{
+      const {id} = req.params;
+      const find = await profileModel.findOne({_id:id});
+      if(!find) return res.status(200).json({code:404,message:'user not found'});
+
+      return res.status(200).json({code:200,package:find})
+      
+    }catch(err){
+      console.log(err.message)
+      return res.status(200).json({code:500,message:'an error occured please try agian',error:err.message})
+    }
+
+  }
+
+
+  exports.searchUser=async(req,res)=>{
+    try{
+        const {token} = req.params;
+         const searchVariable = new RegExp('.*' + token + '.*')
+         const find = await profileModel.find( {$or:[{"name": searchVariable},{"gstin":searchVariable},{'phone':searchVariable}]})
+          return  res.status(200).json({code:200,package:find})
+    }catch(err){
+      console.log(err);
+      return res.status(200).json({code:500,message:err.message})
+    }
+  }

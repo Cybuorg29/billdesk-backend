@@ -6,38 +6,30 @@ const UserModel = require("../../model/userModel");
 
 
 
-let data =[];
 
- async function  getData(type,id){
-    if(type){
-        res = await profileModel.findOne({id:id});
-        res = await {...res?._doc,role:0};
-        console.log(res)
-        data.push(res)
-    }else{
-        res = await profileModel.findOne({id:id});
-        res = await {...res?._doc,role:1};
+ async function  getData(id){
 
-        console.log(res)
-        data.push(res)
-    }
+    let   res = await profileModel.findOne({id:id});
+   
+        return res;
+    
 
 }
 
 exports.getConnections = async (req, res) => {
       try {
-
-            console.log('asdasd')
+            let data = {
+                client:[],
+                supplier:[]
+            }
+                console.log('asdasd')
             const { token } = req.params;
             const _id = await UserModel.convertToken(token);
             const Connections = await connectionModel.find({ $or: [{ cid: _id }, { sid: _id }] });
              await  Promise.all(Connections.map(async(index)=>{
-                   (index.type)? await getData(index.type,index.sid): await getData(index.type,index.cid)
+                   (index.type)?  data.client.push(await getData(index.sid)): data.supplier.push(await getData(index.cid))
                })
              )
-
-                console.log(data)
-            
             return res.status(200).json({ code: 200, package: data});
       } catch (err) {
             console.log(err.message);

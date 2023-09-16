@@ -15,8 +15,10 @@ const ProductSchema  =  new  mongoose.Schema({
     category:{type:String},
     limit:{type:Number,require:true},
     stock:{type:Number,require:true},
-    weight:{type:Number}
-
+    weight:{type:Number},
+    unit:{type:String,require:true},
+    specifications:[
+    ]
 },{
     timestamps:true
 })

@@ -17,7 +17,8 @@ exports.createProduct = async(req,res) => {
                !product?.rate,
                !product?.category,
                !product?.limit,
-               !product?.stock
+               !product?.stock,
+               !product?.unit 
                ){
                 return res.status(200).json({code:400,message:' please fully fill the form '})
                }
@@ -27,20 +28,12 @@ exports.createProduct = async(req,res) => {
                 description,
                 code,
                 rate,
-                category,limit ,stock,weight } =  product;
+                category,limit ,stock,weight,unit,specifications } =  product;
                  let  image = req?.file?.path;
-                   if(!image||image=== undefined){
+                   if(!image||image=== typeof undefined){
                      image = ''
                    }
-                  
-
                const id = await UserModel.convertToken(token);
-
-               const validateProduct = await productModel.findOne({id:id,name:name})
-                if(validateProduct){
-                    return res.status(200).json({code:404,message:"product with the same name already exists"})
-                }
-               
                 const createProduct = await  productModel.create({
             name,
             tax,
@@ -51,7 +44,8 @@ exports.createProduct = async(req,res) => {
             category,
             id,
             limit,
-            stock,weight
+            stock,weight,
+            unit,specifications
                 })
 
            return res.status(200).json({code:200,message:'product added sucessfully',package:createProduct});

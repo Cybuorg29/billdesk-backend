@@ -4,7 +4,7 @@ const router = express.Router()
 const cloudinary  = require('cloudinary').v2
 const {CloudinaryStorage} = require('multer-storage-cloudinary')
 const multer = require('multer')
-const { setupProfile, uploadImage, uploadSetUpImage } = require('../controller/profile')
+const { setupProfile, uploadImage, uploadSetUpImage, getProfileData, searchUser } = require('../controller/profile')
 
 cloudinary.config({
     cloud_name: "dcnu7ucih",
@@ -21,13 +21,10 @@ cloudinary.config({
     },
   });
   const upload = multer({ storage: storage })
-  // (async () => {
-  //   const obj = await productController // Invoke the addProduct function
-  //   console.log(obj);
-  // })();
-  
-  router.post('/profile/setup',upload.single('file'),setupProfile)
-  router.post('/profile/update/photo',upload.single('image'),uploadSetUpImage)
-
+ 
+  router.post('/profile/setup',upload.single('file'),setupProfile);
+  router.post('/profile/update/photo',upload.single('image'),uploadSetUpImage);
+  router.get(`/get/profile/:id`,getProfileData);
+  router.get(`/search/user/:token`,searchUser);
 
 module.exports = router
