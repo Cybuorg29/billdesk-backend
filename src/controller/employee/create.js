@@ -18,12 +18,12 @@ exports.createEmployee=async(req,res)=>{
                 return res.status(200).json({ code: 400, message: 'form not fully filled ' })
             }
             const id =  await UserModel.convertToken(token);
-            const image = req?.file?.path;
+            let image = req?.file?.path;
             if(!image){
-                     return res.status(200).json({ code: 400, message: 'an error occured please try adding image' })
+                    //  return res.status(200).json({ code: 400, message: 'an error occured please try adding image' })
+                    image = ''
                     
                  }
-                 console.log('iamge',image)
             const uploadEmployee = await employeeModel.create({ name, adress, salary, balance, image ,id,type,phone});
             uploadEmployee.save();
             return res.status(200).json({ code: 200, message:'Employee added sucessfully',data:uploadEmployee})

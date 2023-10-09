@@ -24,7 +24,7 @@ exports.handleRequest=async(req,res)=>{
         let cid = '';
         let t = 0;
          console.log('asdasda')
-       if(type===1){
+       if(type===0){
          sid = _id;
          cid = id
         
