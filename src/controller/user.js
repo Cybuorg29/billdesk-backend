@@ -23,7 +23,11 @@ exports.signup = async (req, res) => {
 
     const userExistsbyEmail = await UserModel.findOne({ email: email }) //searching user with email
     if (userExistsbyEmail) {
-      return res.status(200).json({ code: 400, message: 'user already registered wirh this email please login or choose a different email' })
+      return res.status(200).json({ code: 400, message: 'user already registered with this email please login or choose a different email' })
+    }
+      const userExistsbyUserName = await UserModel.findOne({ username: username }) //searching user with email
+    if (userExistsbyUserName) {
+      return res.status(200).json({ code: 400, message: 'username taken please use a different username' })
     }
     console.log(password)
     // create a hashed password
