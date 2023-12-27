@@ -35,24 +35,6 @@ exports.addOfflineClient = async (req, res) => {
     createProfile.save();
     const CreateBank = await bankModel.create({ bank: bankName, branch: branch, id: createUser._id, isfc: isfc, name: Accountname, no: no });
     CreateBank.save();
-    console.log('save')
-
-    let sid = '';
-    let cid = '';
-    let t = 0;
-    console.log('asdasda')
-    if (type === 1) {
-      sid = id;
-      cid = createProfile._id
-
-
-    } else {
-      cid = id
-      sid = createProfile._id;
-      t = 1;
-    }
-    console.log('conn')
-    const createConnection = await connectionModel.create({ cid: cid, sid: sid, status: true, type: t });
 
     return res.status(200).json({ code: 200, message: 'added sucessfully', package: createProfile })
 
