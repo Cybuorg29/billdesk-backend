@@ -30,7 +30,7 @@ exports.addOfflineClient = async (req, res) => {
 
     const createUser = await UserModel.create({ name: name, email: email, password: '', phone: phone, username: '' });
     createUser.save();
-    const createProfile = await profileModel.create({ name: name, gstin, phone, email, building, city, district, state, activities, pincode, type, isSetUp: false, id: createUser._id, image: '' })
+    const createProfile = await profileModel.create({ name: name, gstin, phone, email, adress, state, activities, pincode, type, isSetUp: false, id: createUser._id, image: '' })
     createProfile.save();
     const CreateBank = await bankModel.create({ bank: bankName, branch: branch, id: createUser._id, isfc: isfc, name: Accountname, no: no });
     CreateBank.save();
