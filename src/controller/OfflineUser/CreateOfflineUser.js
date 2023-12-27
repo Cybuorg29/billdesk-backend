@@ -25,33 +25,33 @@ exports.addOfflineClient = async (req, res) => {
 
     const { Accountname, no, isfc, bankName, branch } = bankInfo;
     const _id = await UserModel.convertToken(token);
-    const findClient = await profileModel.findOne({gstin:gstin});
-    if(findClient) return res.status(200).json({code:400,message:"user already exists on the platform ",error:findClient._id});
+    const findClient = await profileModel.findOne({ gstin: gstin });
+    if (findClient) return res.status(200).json({ code: 400, message: "user already exists on the platform ", error: findClient._id });
 
-     const createUser = await UserModel.create({name:name,email:email,password:Math.random()*100,phone:phone,username:Math.random()*100});
-     createUser.save();
-     const createProfile = await profileModel.create({name:name,gstin,phone,email,building,city,district,state,activities,pincode,type,isSetUp:false,id:createUser._id,image:''})
-     createProfile.save();
-      const CreateBank = await bankModel.create({bank:bankName,branch:branch,id:createUser._id,isfc:isfc,name:Accountname,no:no});
-      CreateBank.save();
-        console.log('save')
-       
-        let  sid = '';
-        let cid = '';
-         console.log('asdasda')
-       if(type===1){
-         sid = _id;
-         cid = createUser._id
-        
-        }else{
-          cid = _id
-         sid = createUser._id;
-         t=1;
-       }
-         console.log('conn')
-       const createConnection = await connectionModel.create({cid:cid,sid:sid,status:true,type:t});
-           
-         return res.status(200).json({code:200,message:'added sucessfully',package:createUser._id})
+    const createUser = await UserModel.create({ name: name, email: email, password: '', phone: phone, username: '' });
+    createUser.save();
+    const createProfile = await profileModel.create({ name: name, gstin, phone, email, building, city, district, state, activities, pincode, type, isSetUp: false, id: createUser._id, image: '' })
+    createProfile.save();
+    const CreateBank = await bankModel.create({ bank: bankName, branch: branch, id: createUser._id, isfc: isfc, name: Accountname, no: no });
+    CreateBank.save();
+    console.log('save')
+
+    let sid = '';
+    let cid = '';
+    console.log('asdasda')
+    if (type === 1) {
+      sid = _id;
+      cid = createUser._id
+
+    } else {
+      cid = _id
+      sid = createUser._id;
+      t = 1;
+    }
+    console.log('conn')
+    const createConnection = await connectionModel.create({ cid: cid, sid: sid, status: true, type: t });
+
+    return res.status(200).json({ code: 200, message: 'added sucessfully', package: createUser._id })
 
 
   } catch (err) {
