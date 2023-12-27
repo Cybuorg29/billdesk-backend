@@ -43,6 +43,6 @@ userModelSchema.statics.convertToken = async function (token) {
   return id.id
 }
 
-const UserModel = mongoose.model('user', userModelSchema)
+const UserModel = mongoose.model('users', userModelSchema)
 
 module.exports = UserModel

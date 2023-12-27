@@ -7,8 +7,8 @@ const profileModel = require('../../model/ProfileModel');
 exports.addOfflineClient = async (req, res) => {
   try {
 
-    const { generalInfo, bankInfo, token } = req.body;
-    if (!generalInfo || !bankInfo || !token) return res.status(200).json({ code: 300, message: 'incomplete information please try again ' });
+    const { generalInfo, bankInfo, id } = req.body;
+    if (!generalInfo || !bankInfo || !id) return res.status(200).json({ code: 300, message: 'incomplete information please try again ' });
 
 
     console.log(generalInfo)
@@ -20,11 +20,12 @@ exports.addOfflineClient = async (req, res) => {
       activities,
       pincode,
       type,
-      adress
+      adress,
     } = generalInfo;
 
     const { Accountname, no, isfc, bankName, branch } = bankInfo;
     // const findClient = await profileModel.findOne({ gstin: gstin });
+
 
     // if (findClient) return res.status(200).json({ code: 400, message: "user already exists on the platform ", error: findClient._id });
 
@@ -41,19 +42,19 @@ exports.addOfflineClient = async (req, res) => {
     let t = 0;
     console.log('asdasda')
     if (type === 1) {
-      sid = _id;
+      sid = id;
       cid = createProfile._id
 
 
     } else {
-      cid = _id
+      cid = id
       sid = createProfile._id;
       t = 1;
     }
     console.log('conn')
     const createConnection = await connectionModel.create({ cid: cid, sid: sid, status: true, type: t });
 
-    return res.status(200).json({ code: 200, message: 'added sucessfully', package: createUser._id })
+    return res.status(200).json({ code: 200, message: 'added sucessfully', package: createProfile })
 
 
   } catch (err) {
