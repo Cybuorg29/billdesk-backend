@@ -14,13 +14,11 @@ exports.addOfflineClient = async (req, res) => {
       gstin,
       phone,
       email,
-      building,
-      city,
-      district,
       state,
       activities,
       pincode,
       type,
+      adress
     } = generalInfo;
 
     const { Accountname, no, isfc, bankName, branch } = bankInfo;
