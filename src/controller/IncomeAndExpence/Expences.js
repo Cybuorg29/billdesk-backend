@@ -6,7 +6,7 @@ exports.createExpence = async (req, res) => {
 
         console.log(req.body)
         const { data } = req.body
-        const { title, amount, category, token, date ,uid} = data;
+        const { title, amount, category, token, date, uid, E_id } = data;
 
 
         if (!title || !amount || !category || !token) {
@@ -17,7 +17,7 @@ exports.createExpence = async (req, res) => {
         if (!id) {
             throw new Error('user not found')
         }
-        const pushExpences = await expencesModel.create({ title, amount, category, id, date: date,uid:uid })
+        const pushExpences = await expencesModel.create({ title, amount, category, id, date: date, uid: uid, E_id: E_id })
         console.log(pushExpences)
         if (!pushExpences) throw new Error("an error occured")
         return res.status(200).json({ code: 200, message: 'Expence Added Sucessfully', expence: pushExpences })

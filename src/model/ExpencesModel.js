@@ -6,9 +6,10 @@ const ExpencesSchema = new mongoose.Schema({
     amount: { type: Number, require: true },
     id: { type: String, require: true },
     date: { type: String, require: true },
-    uid: { type: String }
-},{
-    timestamps:true
+    uid: { type: String },
+    E_id: { type: String }
+}, {
+    timestamps: true
 })
 
 
