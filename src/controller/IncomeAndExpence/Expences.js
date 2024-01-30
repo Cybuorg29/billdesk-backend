@@ -57,11 +57,17 @@ exports.deleteExpence = async (req, res) => {
     try {
 
         const { token, uid } = req.params;
+        console.log('asdasdasd')
         if (!token || !uid) {
             throw new Error({ code: 400, message: 'an error occured please try again' })
         }
         const id = await UserModel.convertToken(token);
-        const deleteExpence = await expencesModel.findOneAndDelete({ _id: id, id: uid })
+        const deleteExpence = await expencesModel.findOneAndDelete({ _id: uid, id: id })
+        console.log(deleteExpence)
+
+        if (!deleteExpence) return res.status(200).json({ code: 404, message: 'Cannot delete Expence' })
+
+
         return res.status(200).json({ code: 200, message: 'Expence Delete Sucessfully' })
 
     } catch (err) {
