@@ -24,10 +24,9 @@ exports.addOfflineClient = async (req, res) => {
     } = generalInfo;
 
     const { Accountname, no, isfc, bankName, branch } = bankInfo;
-    // const findClient = await profileModel.findOne({ gstin: gstin });
+    const findClient = await profileModel.findOne({ gstin: gstin, name: name, email: email, phone: phone, state: state, adress: adress });
 
-
-    // if (findClient) return res.status(200).json({ code: 400, message: "user already exists on the platform ", error: findClient._id });
+    if (findClient) return res.status(200).json({ code: 400, message: "user already exists on the platform ", error: findClient._id });
 
     const createUser = await UserModel.create({ name: name, email: email, password: '', phone: phone, username: '' });
     createUser.save();

@@ -7,17 +7,15 @@ const jwt = require('jsonwebtoken')
 
 const userModelSchema = new mongoose.Schema({
 
-  name: { type: String, require: true },
-  phone: { type: String, require: true },
-  email: { type: String, require: true },
-  username: { type: String, require: true },
-  password: { type: String, require: true }
+  name: { type: String },
+  phone: { type: String },
+  email: { type: String },
+  username: { type: String },
+  password: { type: String }
 
 }, {
   timestamps: true,
 });
-
-// userModelSchema.pre('save', async function (next) {
 
 
 userModelSchema.statics.login = async function (username, password) {
@@ -43,6 +41,6 @@ userModelSchema.statics.convertToken = async function (token) {
   return id.id
 }
 
-const UserModel = mongoose.model('users', userModelSchema)
+const UserModel = mongoose.model('accounts', userModelSchema)
 
 module.exports = UserModel
