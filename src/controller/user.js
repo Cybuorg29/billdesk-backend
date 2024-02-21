@@ -11,9 +11,9 @@ const secret = process.env.SECRET_KEY
 exports.signup = async (req, res) => {
   try {
     const { user } = req.body //get data from frontend
-    const { name, password, username, email, phone } = user;
-    console.log(name, password, username, email, phone)
-    if (!name || !password || !username || !email || !phone) {  // data validation
+    const { password, username } = user;
+    console.log(password, username)
+    if (!password || !username) {  // data validation
       return res.status(200).json({ code: 404, message: 'please fully fill the form ' })
     }
     // const userExistsbyPhone = await UserModel.findOne({ phone: phone }) //searching user with phone number
@@ -32,17 +32,15 @@ exports.signup = async (req, res) => {
     //   return res.status(200).json({ code: 400, message: 'username taken please use a different username' })
     // }
 
-    const searchUser = await UserModel.findOne({ $or: [{ phone: phone }, { email: email }, { username: username }] });
+    const searchUser = await UserModel.findOne({ username: username });
     if (searchUser) {
       console.log('user found');
       console.log(searchUser)
-      if ((searchUser.username === '' && searchUser.password === '') && (searchUser.email === email && searchUser.phone === searchUser.phone)) {
-        console.log('not claimed');
-        return res.status(200).json({ code: 400, message: 'user already exists but is  not claimed please verify to claim this profile', package: searchUser._id })
-      }
-      if (searchUser.email === email) throw new Error('user with the same email exists');
-      if (searchUser.username === username) throw new Error('user with the same  username exists');
-      if (searchUser.phone === phone) throw new Error('user with the same  phone exists');
+      // if ((searchUser.username === '' && searchUser.password === '') && (searchUser.email === email && searchUser.phone === searchUser.phone)) {
+      //   console.log('not claimed');
+      //   return res.status(200).json({ code: 400, message: 'user already exists but is  not claimed please verify to claim this profile', package: searchUser._id })
+      // }
+      if (searchUser.username === username) throw new Error('username is already taken please try with different username');
     }
 
     console.log(password)
