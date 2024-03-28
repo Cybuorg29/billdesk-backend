@@ -11,7 +11,7 @@ const secret = process.env.SECRET_KEY
 exports.signup = async (req, res) => {
   try {
     const { user } = req.body //get data from frontend
-    const { password, username } = user;
+    const { password, username, name, email, phone } = user;
     console.log(password, username)
     if (!password || !username) {  // data validation
       return res.status(200).json({ code: 404, message: 'please fully fill the form ' })
@@ -48,7 +48,7 @@ exports.signup = async (req, res) => {
     const salt = await bcrypt.genSalt()
     const hashedPassword = await bcrypt.hash(password, salt)
     console.log(hashedPassword)
-    const pushUser = await UserModel.create({ name, password: hashedPassword, username, email, phone }) //creating new user
+    const pushUser = await UserModel.create({ name, password: hashedPassword, username, email: email, phone: phone }) //creating new user
     pushUser.save()
     const pushProfile = await profileModel.create({ id: pushUser._id, name: '', gstin: '', phone: '', email: '', building: '', city: '', district: '', image: '', pincode: '', state: '' })
     pushProfile.save()
